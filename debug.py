@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 
 #
-#  Copyright (C) 2015 - Preacher
+#  Copyright (C) 2016 - Preacher
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 #
 
 __author__ = "Preacher"
-__version__ = "1.3.1"
+__version__ = "1.3.2"
 
 import time
 import sys
@@ -29,41 +29,55 @@ class Debug():
     """
     def __init__(self, log_prefix=""):
         t = time.time()
-        self.log_file = ""
+        self.log_file_name = ""
 
         if log_prefix != "":
-            self.log_file = log_prefix + "_"+ str(int(t)) + ".log"
-            sys.stdout = open(self.log_file, "w+")
+            self.log_file_name = log_prefix + "_"+ str(int(t)) + ".log"
+            try:
+                self.log = open(self.log_file_name, "w+")
+            except:
+                print("[!] debug: Error creating log file !")
+                sys.exit(-1)
 
     def info(self, info_msg):
         t = time.localtime()
-        print ("%04d/%02d/%02d %02d:%02d:%02d INFO     %s" %(t[0], t[1], t[2], t[3], t[4], t[5], info_msg))
+        self.append_log("%04d/%02d/%02d %02d:%02d:%02d INFO     %s" %(t[0], t[1], t[2], t[3], t[4], t[5], info_msg))
         return None
 
     def debug(self, debug_msg):
         t = time.localtime()
-        print ("%04d/%02d/%02d %02d:%02d:%02d DEBUG    %s" %(t[0], t[1], t[2], t[3], t[4], t[5], debug_msg))
+        self.append_log("%04d/%02d/%02d %02d:%02d:%02d DEBUG    %s" %(t[0], t[1], t[2], t[3], t[4], t[5], debug_msg))
         return None
 
     def warning(self, warning_msg):
         t = time.localtime()
-        print ("%04d/%02d/%02d %02d:%02d:%02d WARNING  %s" %(t[0], t[1], t[2], t[3], t[4], t[5], warning_msg))
+        self.append_log("%04d/%02d/%02d %02d:%02d:%02d WARNING  %s" %(t[0], t[1], t[2], t[3], t[4], t[5], warning_msg))
         return None
 
     def error(self, error_msg):
         t = time.localtime()
-        print ("%04d/%02d/%02d %02d:%02d:%02d ERROR    %s" %(t[0], t[1], t[2], t[3], t[4], t[5], error_msg))
+        self.append_log("%04d/%02d/%02d %02d:%02d:%02d ERROR    %s" %(t[0], t[1], t[2], t[3], t[4], t[5], error_msg))
         return None
 
     def critical(self, critical_msg):
         t = time.localtime()
-        print ("%04d/%02d/%02d %02d:%02d:%02d CRITICAL %s" %(t[0], t[1], t[2], t[3], t[4], t[5], critical_msg))
+        self.append_log("%04d/%02d/%02d %02d:%02d:%02d CRITICAL %s" %(t[0], t[1], t[2], t[3], t[4], t[5], critical_msg))
+        return None
+
+    def append_log(self, s):
+        """
+        Append a debug information to the file
+        """
+        if self.log_file_name != "":
+            self.log.write(s + "\n")
+        else:
+            print(s)
         return None
 
     def close(self):
         """
         Close the log file, if stdout is not used
         """
-        if self.log_file != "":
-            sys.stdout.close()
+        if self.log_file_name != "":
+            self.log.close()
         return None
