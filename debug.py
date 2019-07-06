@@ -34,7 +34,7 @@ class Debug():
         if log_prefix != "":
             self.log_file_name = log_prefix + "_"+ str(int(t)) + ".log"
             try:
-                self.log = open(self.log_file_name, "w+")
+                self.log = open(self.log_file_name, "w+", 1)
             except:
                 print("[!] debug: Error creating log file !")
                 sys.exit(-1)
