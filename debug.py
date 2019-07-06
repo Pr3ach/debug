@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 
 #
-#  Copyright (C) 2016 - Preacher
+#  Copyright (C) 2019 - Preacher
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 #
 
 __author__ = "Preacher"
-__version__ = "1.3.2"
+__version__ = "1.3.3"
 
 import time
 import sys
